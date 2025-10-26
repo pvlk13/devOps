@@ -1,0 +1,31 @@
+---
+- name: Setup backend application
+  hosts: backend
+  become: yes
+  tasks:
+    - name: Install nginx
+      yum:
+        name: nginx
+        state: present
+
+    - name: Create backend HTML page
+      copy:
+        content: |
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <title>Backend API - {{ inventory_hostname }}</title>
+          </head>
+          <body>
+              <h1>Backend API Server</h1>
+              <p>Server: {{ inventory_hostname }}</p>
+              <p>IP: {{ ansible_default_ipv4.address }}</p>
+          </body>
+          </html>
+        dest: /usr/share/nginx/html/index.html
+
+    - name: Start and enable nginx
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes

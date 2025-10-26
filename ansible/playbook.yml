@@ -1,0 +1,22 @@
+---
+- name: Configure load balancer
+  hosts: load_balancer
+  become: yes
+  tasks:
+    - name: Copy nginx configuration
+      template:
+        src: nginx.conf
+        dest: /etc/nginx/nginx.conf
+      vars:
+        BACKEND_1_IP: "{{ hostvars['backend-1']['ansible_default_ipv4']['address'] }}"
+        BACKEND_2_IP: "{{ hostvars['backend-2']['ansible_default_ipv4']['address'] }}"
+        BACKEND_3_IP: "{{ hostvars['backend-3']['ansible_default_ipv4']['address'] }}"
+        FRONTEND_IP: "{{ hostvars['frontend']['ansible_default_ipv4']['address'] }}"
+
+    - name: Restart nginx
+      systemd:
+        name: nginx
+        state: restarted
+
+- import_playbook: frontend-setup.yml
+- import_playbook: backend-setup.yml

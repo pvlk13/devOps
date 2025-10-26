@@ -1,0 +1,30 @@
+---
+- name: Setup frontend application
+  hosts: frontend
+  become: yes
+  tasks:
+    - name: Install nginx
+      yum:
+        name: nginx
+        state: present
+
+    - name: Create frontend HTML page
+      copy:
+        content: |
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <title>Frontend Application</title>
+          </head>
+          <body>
+              <h1>Welcome to Frontend Application</h1>
+              <p>This is served from the frontend instance</p>
+          </body>
+          </html>
+        dest: /usr/share/nginx/html/index.html
+
+    - name: Start and enable nginx
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
