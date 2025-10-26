@@ -103,6 +103,18 @@ resource "aws_security_group" "bastion_sg" {
     }
   
 }
+
+# Allow SSH from Bastion to Load Balancer
+resource "aws_security_group_rule" "allow_ssh_from_bastion_to_lb" {
+  type                     = "ingress"
+  from_port                = 22
+  to_port                  = 22
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.bastion_sg.id
+  security_group_id        = aws_security_group.lb_sg.id
+  description              = "Allow SSH from Bastion host to Load Balancer"
+}
+
 #Security Group for Private Instances
 resource "aws_security_group" "private_sg"{
     name = "private-sg-mini-vijaya"
