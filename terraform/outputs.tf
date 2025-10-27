@@ -10,3 +10,7 @@ output "backend_private_ips"{
     description = "Private ips of backend instances"
     value = aws_instance.backend[*].public_ip
 }
+output "frontend_private_ips"{
+    description = "Private ip for frontend instance"
+    value = aws_instance.frontend.private_ip
+}

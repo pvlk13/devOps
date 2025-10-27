@@ -115,7 +115,7 @@ resource "aws_security_group_rule" "allow_ssh_from_bastion_to_lb" {
   description              = "Allow SSH from Bastion host to Load Balancer"
 }
 
-#Security Group for Private Instances
+#Security Group for Private Instanceste
 resource "aws_security_group" "private_sg"{
     name = "private-sg-mini-vijaya"
     description = "Security group for private instances"
