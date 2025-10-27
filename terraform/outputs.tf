@@ -8,7 +8,7 @@ output "bastion_public_ip" {
 }
 output "backend_private_ips"{
     description = "Private ips of backend instances"
-    value = aws_instance.backend[*].public_ip
+    value = aws_instance.backend[*].private_ip
 }
 output "frontend_private_ips"{
     description = "Private ip for frontend instance"
