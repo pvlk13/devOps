@@ -192,7 +192,7 @@ resource "aws_instance" "backend" {
     count = 3
     ami = var.ami
     instance_type = var.instance_type
-    subnet_id = aws_subnet.public.id
+    subnet_id = aws_subnet.private.id
     vpc_security_group_ids = [aws_security_group.private_sg.id]
     key_name = var.key_name
     tags = {
